@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue3 Multilang Country Selector - Internationalization Demo</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f9fafb;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+      .language-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+      }
+      .language-demo {
+        padding: 20px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #f9fafb;
+      }
+      .language-demo h3 {
+        margin: 0 0 12px 0;
+        color: #374151;
+        font-size: 16px;
+      }
+      .selected-info {
+        margin-top: 12px;
+        padding: 12px;
+        background: #eff6ff;
+        border-radius: 6px;
+        font-size: 14px;
+        color: #1e40af;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <h1>Vue3 Multilang Country Selector - Internationalization Demo</h1>
+        <p>This demo shows the country selector in different languages</p>
+
+        <div class="language-grid">
+          <div class="language-demo">
+            <h3>English</h3>
+            <country-selector 
+              v-model="selectedCountry1"
+              language="en"
+              @change="onCountryChange1"
+            />
+            <div v-if="selectedInfo1" class="selected-info">
+              Selected: {{ selectedInfo1.name }} ({{ selectedInfo1.code }})
+            </div>
+          </div>
+
+          <div class="language-demo">
+            <h3>简体中文 (Chinese Simplified)</h3>
+            <country-selector 
+              v-model="selectedCountry2"
+              language="zh-CN"
+              @change="onCountryChange2"
+            />
+            <div v-if="selectedInfo2" class="selected-info">
+              选择的国家: {{ selectedInfo2.name }} ({{ selectedInfo2.code }})
+            </div>
+          </div>
+
+          <div class="language-demo">
+            <h3>日本語 (Japanese)</h3>
+            <country-selector 
+              v-model="selectedCountry3"
+              language="ja"
+              @change="onCountryChange3"
+            />
+            <div v-if="selectedInfo3" class="selected-info">
+              選択された国: {{ selectedInfo3.name }} ({{ selectedInfo3.code }})
+            </div>
+          </div>
+
+          <div class="language-demo">
+            <h3>Français (French)</h3>
+            <country-selector 
+              v-model="selectedCountry4"
+              language="fr"
+              @change="onCountryChange4"
+            />
+            <div v-if="selectedInfo4" class="selected-info">
+              Pays sélectionné: {{ selectedInfo4.name }} ({{ selectedInfo4.code }})
+            </div>
+          </div>
+
+          <div class="language-demo">
+            <h3>Deutsch (German)</h3>
+            <country-selector 
+              v-model="selectedCountry5"
+              language="de"
+              @change="onCountryChange5"
+            />
+            <div v-if="selectedInfo5" class="selected-info">
+              Ausgewähltes Land: {{ selectedInfo5.name }} ({{ selectedInfo5.code }})
+            </div>
+          </div>
+
+          <div class="language-demo">
+            <h3>Español (Spanish)</h3>
+            <country-selector 
+              v-model="selectedCountry6"
+              language="es"
+              @change="onCountryChange6"
+            />
+            <div v-if="selectedInfo6" class="selected-info">
+              País seleccionado: {{ selectedInfo6.name }} ({{ selectedInfo6.code }})
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/i18n-demo.ts"></script>
+  </body>
+</html>

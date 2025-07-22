@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue3 多语言国家选择器 - 中文演示</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f9fafb;
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .header h1 {
+        color: #1f2937;
+        margin-bottom: 8px;
+      }
+      .header p {
+        color: #6b7280;
+        font-size: 16px;
+      }
+      .demo-section {
+        margin-bottom: 40px;
+      }
+      .demo-section h2 {
+        color: #1f2937;
+        margin-bottom: 16px;
+        font-size: 20px;
+      }
+      .demo-section p {
+        color: #6b7280;
+        margin-bottom: 20px;
+      }
+      .demo-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+      .demo-item {
+        padding: 20px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        background: #f9fafb;
+      }
+      .demo-item h3 {
+        margin: 0 0 12px 0;
+        color: #374151;
+        font-size: 16px;
+      }
+      .selected-info {
+        margin-top: 12px;
+        padding: 12px;
+        background: #eff6ff;
+        border-radius: 6px;
+        font-size: 14px;
+        color: #1e40af;
+      }
+      .feature-list {
+        list-style: none;
+        padding: 0;
+      }
+      .feature-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid #f3f4f6;
+      }
+      .feature-list li:last-child {
+        border-bottom: none;
+      }
+      .feature-list li::before {
+        content: "✓";
+        color: #10b981;
+        font-weight: bold;
+        margin-right: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <div class="header">
+          <h1>Vue3 多语言国家选择器</h1>
+          <p>一个灵活且可定制的 Vue 3 国家选择器组件，支持国际化</p>
+        </div>
+
+        <div class="demo-section">
+          <h2>🌟 主要特性</h2>
+          <ul class="feature-list">
+            <li>🌍 完整的国家列表，包含国旗和区号</li>
+            <li>🌐 支持 15+ 种语言的国际化</li>
+            <li>🔍 可搜索的下拉菜单</li>
+            <li>🎨 多种尺寸选择</li>
+            <li>🎯 完整的 TypeScript 支持</li>
+            <li>♿ 无障碍设计</li>
+            <li>📱 移动端友好</li>
+          </ul>
+        </div>
+
+        <div class="demo-section">
+          <h2>🚀 基本使用</h2>
+          <p>默认的国家选择器，支持搜索和清除功能</p>
+          <div class="demo-grid">
+            <div class="demo-item">
+              <h3>中文界面</h3>
+              <country-selector 
+                v-model="selectedCountry1"
+                language="zh-CN"
+                @change="onCountryChange1"
+              />
+              <div v-if="selectedInfo1" class="selected-info">
+                选择的国家：{{ selectedInfo1.name }} ({{ selectedInfo1.code }})
+              </div>
+            </div>
+
+            <div class="demo-item">
+              <h3>显示区号</h3>
+              <country-selector 
+                v-model="selectedCountry2"
+                language="zh-CN"
+                :show-dial-code="true"
+                @change="onCountryChange2"
+              />
+              <div v-if="selectedInfo2" class="selected-info">
+                选择的国家：{{ selectedInfo2.name }} {{ selectedInfo2.dialCode }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-section">
+          <h2>📏 不同尺寸</h2>
+          <p>提供小、中、大三种尺寸选择</p>
+          <div class="demo-grid">
+            <div class="demo-item">
+              <h3>小尺寸</h3>
+              <country-selector 
+                v-model="selectedCountry3"
+                language="zh-CN"
+                size="small"
+              />
+            </div>
+
+            <div class="demo-item">
+              <h3>中等尺寸（默认）</h3>
+              <country-selector 
+                v-model="selectedCountry4"
+                language="zh-CN"
+                size="medium"
+              />
+            </div>
+
+            <div class="demo-item">
+              <h3>大尺寸</h3>
+              <country-selector 
+                v-model="selectedCountry5"
+                language="zh-CN"
+                size="large"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-section">
+          <h2>🎛️ 自定义选项</h2>
+          <p>各种自定义配置选项</p>
+          <div class="demo-grid">
+            <div class="demo-item">
+              <h3>禁用搜索</h3>
+              <country-selector 
+                v-model="selectedCountry6"
+                language="zh-CN"
+                :searchable="false"
+              />
+            </div>
+
+            <div class="demo-item">
+              <h3>禁用清除按钮</h3>
+              <country-selector 
+                v-model="selectedCountry7"
+                language="zh-CN"
+                :clearable="false"
+              />
+            </div>
+
+            <div class="demo-item">
+              <h3>隐藏国旗</h3>
+              <country-selector 
+                v-model="selectedCountry8"
+                language="zh-CN"
+                :show-flag="false"
+              />
+            </div>
+
+            <div class="demo-item">
+              <h3>禁用状态</h3>
+              <country-selector 
+                v-model="selectedCountry9"
+                language="zh-CN"
+                :disabled="true"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-section">
+          <h2>🌐 多语言支持</h2>
+          <p>支持多种语言的国家名称和界面文本</p>
+          <div class="demo-grid">
+            <div class="demo-item">
+              <h3>英语</h3>
+              <country-selector 
+                v-model="selectedCountry10"
+                language="en"
+              />
+            </div>
+
+            <div class="demo-item">
+              <h3>日语</h3>
+              <country-selector 
+                v-model="selectedCountry11"
+                language="ja"
+              />
+            </div>
+
+            <div class="demo-item">
+              <h3>法语</h3>
+              <country-selector 
+                v-model="selectedCountry12"
+                language="fr"
+              />
+            </div>
+
+            <div class="demo-item">
+              <h3>德语</h3>
+              <country-selector 
+                v-model="selectedCountry13"
+                language="de"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/demo-zh.ts"></script>
+  </body>
+</html>
