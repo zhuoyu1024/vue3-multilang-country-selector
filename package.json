@@ -1,20 +1,11 @@
 {
-  "name": "vue3-multilang-country-selector",
+  "name": "multilang-country-selector",
   "version": "1.0.0",
   "description": "A Vue 3 multilingual country selector component with internationalization, search and customization options | Vue 3 多语言国家选择器组件，支持国际化、搜索和自定义选项",
   "main": "lib/index.umd.js",
   "module": "lib/index.es.js",
   "types": "lib/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./lib/index.es.js",
-      "require": "./lib/index.umd.js",
-      "types": "./lib/index.d.ts"
-    },
-    "./style.css": "./lib/style.css"
-  },
   "sideEffects": false,
-
   "files": [
     "lib",
     "src"
@@ -22,7 +13,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && vue-tsc --emitDeclarationOnly",
-    "build:lib": "vite build --mode lib",
+    "build:lib": "vite build --mode lib && npm run copy:types",
+    "copy:types": "cp src/index.d.ts lib/index.d.ts",
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",

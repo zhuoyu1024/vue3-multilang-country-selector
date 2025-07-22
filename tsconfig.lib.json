@@ -1,14 +1,36 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
     "noEmit": false,
     "declaration": true,
     "declarationDir": "lib",
     "outDir": "lib",
     "emitDeclarationOnly": true,
-    "skipLibCheck": true,
-    "allowImportingTsExtensions": false
+    "strict": true,
+    "allowImportingTsExtensions": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["src/index.ts", "src/types.ts", "src/utils/**/*", "src/data/**/*"],
-  "exclude": ["src/main.ts", "src/App.vue", "src/**/*.test.ts", "src/demo-zh.ts", "src/i18n-demo.ts", "src/components/**/*.vue"]
+  "include": [
+    "src/index.ts",
+    "src/types.ts",
+    "src/utils/**/*",
+    "src/data/**/*"
+  ],
+  "exclude": [
+    "src/main.ts",
+    "src/App.vue",
+    "src/**/*.test.ts",
+    "src/demo-zh.ts",
+    "src/i18n-demo.ts",
+    "src/components/**/*.vue"
+  ]
 }
