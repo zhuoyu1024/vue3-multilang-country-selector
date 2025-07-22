@@ -2,9 +2,19 @@
   "name": "vue3-multilang-country-selector",
   "version": "1.0.0",
   "description": "A Vue 3 multilingual country selector component with internationalization, search and customization options | Vue 3 多语言国家选择器组件，支持国际化、搜索和自定义选项",
-  "main": "lib/index.js",
-  "module": "lib/index.esm.js",
+  "main": "lib/index.umd.js",
+  "module": "lib/index.es.js",
   "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/index.es.js",
+      "require": "./lib/index.umd.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./style.css": "./lib/style.css"
+  },
+  "sideEffects": false,
+
   "files": [
     "lib",
     "src"
@@ -39,7 +49,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zhuoyu1024/vue3-multilang-country-selector.git"
+    "url": "git+https://github.com/zhuoyu1024/vue3-multilang-country-selector.git"
   },
   "bugs": {
     "url": "https://github.com/zhuoyu1024/vue3-multilang-country-selector/issues"

@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "declarationDir": "lib",
+    "outDir": "lib",
+    "emitDeclarationOnly": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": false
+  },
+  "include": ["src/index.ts", "src/types.ts", "src/utils/**/*", "src/data/**/*"],
+  "exclude": ["src/main.ts", "src/App.vue", "src/**/*.test.ts", "src/demo-zh.ts", "src/i18n-demo.ts", "src/components/**/*.vue"]
+}
