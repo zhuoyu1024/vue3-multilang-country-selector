@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue3 Multilang Country Selector - NPM Package Test</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/vue3-multilang-country-selector@latest/lib/index.umd.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/vue3-multilang-country-selector@latest/lib/style.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        
+        .language-selector {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .language-selector label {
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        
+        .language-selector select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .demo-section {
+            margin-bottom: 40px;
+        }
+        
+        .demo-section h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .demo-item {
+            padding: 20px;
+            border: 1px solid #e1e8ed;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        
+        .demo-item h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        
+        .selected-info {
+            margin-top: 15px;
+            padding: 10px;
+            background: #e8f5e8;
+            border-left: 4px solid #27ae60;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .package-info {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .package-info h3 {
+            margin-top: 0;
+            color: #1976d2;
+        }
+        
+        .install-code {
+            background: #263238;
+            color: #fff;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+        }
+        
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .feature-item {
+            padding: 15px;
+            background: #fff3e0;
+            border-radius: 6px;
+            border-left: 3px solid #ff9800;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <h1>🌍 Vue3 Multilang Country Selector</h1>
+            <p class="subtitle">Testing the published NPM package</p>
+            
+            <div class="package-info">
+                <h3>📦 Package Information</h3>
+                <p><strong>Package:</strong> vue3-multilang-country-selector</p>
+                <p><strong>Install:</strong></p>
+                <div class="install-code">npm install vue3-multilang-country-selector</div>
+                <p><strong>CDN:</strong></p>
+                <div class="install-code">https://unpkg.com/vue3-multilang-country-selector@latest/lib/index.umd.js</div>
+            </div>
+
+            <div class="language-selector">
+                <label for="language">🌐 Language / 语言:</label>
+                <select id="language" v-model="currentLanguage">
+                    <option value="en">English</option>
+                    <option value="zh-CN">简体中文</option>
+                    <option value="cht">繁體中文</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="it">Italiano</option>
+                    <option value="ko">한국어</option>
+                    <option value="ja">日本語</option>
+                    <option value="es">Español</option>
+                    <option value="pt">Português</option>
+                </select>
+            </div>
+
+            <div class="demo-section">
+                <h2>🚀 Basic Usage</h2>
+                <div class="demo-grid">
+                    <div class="demo-item">
+                        <h3>Default Selector</h3>
+                        <country-selector
+                            v-model="selectedCountry1"
+                            :language="currentLanguage"
+                            @change="onCountryChange1"
+                        ></country-selector>
+                        <div v-if="selectedInfo1" class="selected-info">
+                            Selected: {{ selectedInfo1.name }} ({{ selectedInfo1.code }})
+                        </div>
+                    </div>
+
+                    <div class="demo-item">
+                        <h3>With Dial Code</h3>
+                        <country-selector
+                            v-model="selectedCountry2"
+                            :language="currentLanguage"
+                            :show-dial-code="true"
+                            @change="onCountryChange2"
+                        ></country-selector>
+                        <div v-if="selectedInfo2" class="selected-info">
+                            Selected: {{ selectedInfo2.name }} {{ selectedInfo2.dialCode }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>⚙️ Advanced Features</h2>
+                <div class="demo-grid">
+                    <div class="demo-item">
+                        <h3>Searchable + Clearable</h3>
+                        <country-selector
+                            v-model="selectedCountry3"
+                            :language="currentLanguage"
+                            :searchable="true"
+                            :clearable="true"
+                            :show-flag="true"
+                            @change="onCountryChange3"
+                        ></country-selector>
+                        <div v-if="selectedInfo3" class="selected-info">
+                            Selected: {{ selectedInfo3.flag }} {{ selectedInfo3.name }}
+                        </div>
+                    </div>
+
+                    <div class="demo-item">
+                        <h3>Large Size + All Features</h3>
+                        <country-selector
+                            v-model="selectedCountry4"
+                            :language="currentLanguage"
+                            :searchable="true"
+                            :clearable="true"
+                            :show-flag="true"
+                            :show-dial-code="true"
+                            size="large"
+                            @change="onCountryChange4"
+                        ></country-selector>
+                        <div v-if="selectedInfo4" class="selected-info">
+                            Selected: {{ selectedInfo4.flag }} {{ selectedInfo4.name }} {{ selectedInfo4.dialCode }}
+                        </div>
+                    </div>
+
+                    <div class="demo-item">
+                        <h3>Small Size</h3>
+                        <country-selector
+                            v-model="selectedCountry5"
+                            :language="currentLanguage"
+                            size="small"
+                            :show-flag="true"
+                            @change="onCountryChange5"
+                        ></country-selector>
+                        <div v-if="selectedInfo5" class="selected-info">
+                            Selected: {{ selectedInfo5.flag }} {{ selectedInfo5.name }}
+                        </div>
+                    </div>
+
+                    <div class="demo-item">
+                        <h3>Disabled State</h3>
+                        <country-selector
+                            v-model="selectedCountry6"
+                            :language="currentLanguage"
+                            :disabled="true"
+                            :show-flag="true"
+                            :show-dial-code="true"
+                        ></country-selector>
+                        <p style="color: #666; font-size: 14px;">This selector is disabled</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="demo-section">
+                <h2>✨ Features</h2>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <strong>🌍 Multilingual Support</strong><br>
+                        Support for 20+ languages
+                    </div>
+                    <div class="feature-item">
+                        <strong>🔍 Search Functionality</strong><br>
+                        Quick country search
+                    </div>
+                    <div class="feature-item">
+                        <strong>🎨 Customizable</strong><br>
+                        Multiple sizes and styles
+                    </div>
+                    <div class="feature-item">
+                        <strong>📱 Responsive</strong><br>
+                        Works on all devices
+                    </div>
+                    <div class="feature-item">
+                        <strong>🚀 TypeScript</strong><br>
+                        Full TypeScript support
+                    </div>
+                    <div class="feature-item">
+                        <strong>🎯 Vue 3</strong><br>
+                        Built for Vue 3
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+        const { CountrySelector } = Vue3CountrySelector;
+
+        createApp({
+            components: {
+                CountrySelector
+            },
+            data() {
+                return {
+                    currentLanguage: 'en',
+                    selectedCountry1: '',
+                    selectedCountry2: '',
+                    selectedCountry3: '',
+                    selectedCountry4: '',
+                    selectedCountry5: '',
+                    selectedCountry6: 'CN', // Pre-selected for disabled demo
+                    selectedInfo1: null,
+                    selectedInfo2: null,
+                    selectedInfo3: null,
+                    selectedInfo4: null,
+                    selectedInfo5: null
+                }
+            },
+            methods: {
+                onCountryChange1(country) {
+                    this.selectedInfo1 = country;
+                    console.log('Country 1 changed:', country);
+                },
+                onCountryChange2(country) {
+                    this.selectedInfo2 = country;
+                    console.log('Country 2 changed:', country);
+                },
+                onCountryChange3(country) {
+                    this.selectedInfo3 = country;
+                    console.log('Country 3 changed:', country);
+                },
+                onCountryChange4(country) {
+                    this.selectedInfo4 = country;
+                    console.log('Country 4 changed:', country);
+                },
+                onCountryChange5(country) {
+                    this.selectedInfo5 = country;
+                    console.log('Country 5 changed:', country);
+                }
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>
