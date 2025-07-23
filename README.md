@@ -38,6 +38,7 @@ npm install vue3-multilang-country-selector
 import { ref } from 'vue'
 import { CountrySelector } from 'vue3-multilang-country-selector'
 import type { Country } from 'vue3-multilang-country-selector'
+import 'vue3-multilang-country-selector/lib/style.css'
 
 const selectedCountry = ref('')
 
