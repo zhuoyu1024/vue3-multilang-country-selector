@@ -52,7 +52,8 @@ const onCountryChange = (country: Country | null) => {
 
 | 属性 | 类型 | 默认值 | 说明 |
 |------|------|---------|-------------|
-| `modelValue` | `string` | `''` | 选中的国家代码 (ISO 3166-1 alpha-2) |
+| `modelValue` | `string` | `''` | 选中的值（根据 `type` 属性返回国家代码或区号） |
+| `type` | `'country' \| 'phone'` | `'country'` | 决定返回值类型：国家代码（如 'US'）或不带+的区号（如 '1'） |
 | `placeholder` | `string` | `'Select a country'` | 未选择时的占位符文本 |
 | `searchable` | `boolean` | `true` | 启用/禁用搜索功能 |
 | `showFlag` | `boolean` | `true` | 显示/隐藏国旗 |
@@ -70,7 +71,7 @@ const onCountryChange = (country: Country | null) => {
 
 | 事件 | 参数 | 说明 |
 |-------|---------|-------------|
-| `update:modelValue` | `string` | 选中国家变化时触发 |
+| `update:modelValue` | `string` | 选中国家变化时触发（值取决于 `type` 属性） |
 | `change` | `Country \| null` | 选中国家变化时触发 |
 | `search` | `string` | 搜索查询变化时触发 |
 
@@ -133,10 +134,37 @@ interface Country {
 </template>
 ```
 
+### 返回值类型选项
+
+```vue
+<template>
+  <div>
+    <!-- 默认：返回国家代码（如 'US', 'CN'） -->
+    <CountrySelector
+      v-model="selectedCountryCode"
+      type="country"
+      :show-dial-code="true"
+    />
+
+    <!-- 返回不带+的区号（如 '1', '86'） -->
+    <CountrySelector
+      v-model="selectedDialCode"
+      type="phone"
+      :show-dial-code="true"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+const selectedCountryCode = ref('') // 将是 'US', 'CN' 等
+const selectedDialCode = ref('')    // 将是 '1', '86' 等
+</script>
+```
+
 ### 显示区号
 
 ```vue
-<CountrySelector 
+<CountrySelector
   v-model="selectedCountry"
   :show-dial-code="true"
 />

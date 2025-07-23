@@ -36,6 +36,7 @@ export interface CountrySelectorProps {
   language?: SupportedLanguage
   searchPlaceholder?: string
   noResultsText?: string
+  type?: 'phone' | 'country'
 }
 
 export interface CountrySelectorEmits {

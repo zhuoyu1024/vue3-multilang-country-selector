@@ -171,4 +171,50 @@ describe('CountrySelector', () => {
     const searchInput = wrapper.find('.country-selector__search-input')
     expect(searchInput.attributes('placeholder')).toBe('搜索国家...')
   })
+
+  it('emits country code when type is country (default)', async () => {
+    await wrapper.find('.country-selector__input-wrapper').trigger('click')
+
+    const firstOption = wrapper.find('.country-selector__option')
+    await firstOption.trigger('click')
+
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+    expect(wrapper.emitted('update:modelValue')[0]).toEqual(['US'])
+  })
+
+  it('emits dial code without + when type is phone', async () => {
+    await wrapper.setProps({ type: 'phone' })
+    await wrapper.find('.country-selector__input-wrapper').trigger('click')
+
+    const firstOption = wrapper.find('.country-selector__option')
+    await firstOption.trigger('click')
+
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+    expect(wrapper.emitted('update:modelValue')[0]).toEqual(['1'])
+  })
+
+  it('displays selected country when type is phone and modelValue is dial code without +', async () => {
+    await wrapper.setProps({
+      type: 'phone',
+      modelValue: '1'
+    })
+
+    expect(wrapper.find('.country-selector__selected').exists()).toBe(true)
+    expect(wrapper.find('.country-selector__name').text()).toBe('United States')
+  })
+
+  it('shows correct selected option when type is phone', async () => {
+    await wrapper.setProps({
+      type: 'phone',
+      modelValue: '44'
+    })
+    await wrapper.find('.country-selector__input-wrapper').trigger('click')
+
+    const options = wrapper.findAll('.country-selector__option')
+    const selectedOption = options.find(option =>
+      option.classes().includes('country-selector__option--selected')
+    )
+
+    expect(selectedOption?.find('.country-selector__name').text()).toBe('United Kingdom')
+  })
 })

@@ -52,7 +52,8 @@ const onCountryChange = (country: Country | null) => {
 
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `modelValue` | `string` | `''` | Selected country code (ISO 3166-1 alpha-2) |
+| `modelValue` | `string` | `''` | Selected value (country code or dial code based on `type`) |
+| `type` | `'country' \| 'phone'` | `'country'` | Determines what value is returned: country code (e.g., 'US') or dial code without + (e.g., '1') |
 | `placeholder` | `string` | `'Select a country'` | Placeholder text when no country is selected |
 | `searchable` | `boolean` | `true` | Enable/disable search functionality |
 | `showFlag` | `boolean` | `true` | Show/hide country flags |
@@ -70,7 +71,7 @@ const onCountryChange = (country: Country | null) => {
 
 | Event | Payload | Description |
 |-------|---------|-------------|
-| `update:modelValue` | `string` | Emitted when selected country changes |
+| `update:modelValue` | `string` | Emitted when selected country changes (value depends on `type` prop) |
 | `change` | `Country \| null` | Emitted when selected country changes |
 | `search` | `string` | Emitted when search query changes |
 
@@ -133,10 +134,37 @@ The component supports the following languages:
 </template>
 ```
 
+### Return Type Options
+
+```vue
+<template>
+  <div>
+    <!-- Default: Returns country code (e.g., 'US', 'CN') -->
+    <CountrySelector
+      v-model="selectedCountryCode"
+      type="country"
+      :show-dial-code="true"
+    />
+
+    <!-- Returns dial code without + (e.g., '1', '86') -->
+    <CountrySelector
+      v-model="selectedDialCode"
+      type="phone"
+      :show-dial-code="true"
+    />
+  </div>
+</template>
+
+<script setup lang="ts">
+const selectedCountryCode = ref('') // Will be 'US', 'CN', etc.
+const selectedDialCode = ref('')    // Will be '1', '86', etc.
+</script>
+```
+
 ### With Dial Codes
 
 ```vue
-<CountrySelector 
+<CountrySelector
   v-model="selectedCountry"
   :show-dial-code="true"
 />

@@ -43,7 +43,7 @@
             v-for="country in filteredCountries"
             :key="country.code"
             class="country-selector__option"
-            :class="{ 'country-selector__option--selected': country.code === modelValue }"
+            :class="{ 'country-selector__option--selected': isCountrySelected(country) }"
             @click="selectCountry(country)"
           >
             <span v-if="showFlag" class="country-selector__flag">{{ country.flag }}</span>
@@ -72,7 +72,8 @@ const props = withDefaults(defineProps<CountrySelectorProps>(), {
   disabled: false,
   clearable: true,
   size: 'medium',
-  language: 'en'
+  language: 'en',
+  type: 'country'
 })
 
 const emit = defineEmits<CountrySelectorEmits>()
@@ -103,7 +104,15 @@ const localizedNoResultsText = computed(() => {
 
 const selectedCountry = computed(() => {
   if (!props.modelValue) return null
-  return localizedCountries.value.find(country => country.code === props.modelValue) || null
+
+  if (props.type === 'phone') {
+    // 当type为phone时，modelValue是不带+的电话区号，需要根据区号查找国家
+    const dialCodeWithPlus = '+' + props.modelValue
+    return localizedCountries.value.find(country => country.dialCode === dialCodeWithPlus) || null
+  } else {
+    // 当type为country时，modelValue是国家代码
+    return localizedCountries.value.find(country => country.code === props.modelValue) || null
+  }
 })
 
 const filteredCountries = computed(() => {
@@ -134,8 +143,27 @@ const toggleDropdown = () => {
   }
 }
 
+const isCountrySelected = (country: Country) => {
+  if (!props.modelValue) return false
+
+  if (props.type === 'phone') {
+    // 比较时需要将modelValue加上+号与dialCode比较
+    const dialCodeWithPlus = '+' + props.modelValue
+    return country.dialCode === dialCodeWithPlus
+  } else {
+    return country.code === props.modelValue
+  }
+}
+
 const selectCountry = (country: Country) => {
-  emit('update:modelValue', country.code)
+  let value = ''
+  if (props.type === 'phone') {
+    // 当type为phone时，返回不带+号的区号
+    value = country.dialCode ? country.dialCode.replace('+', '') : ''
+  } else {
+    value = country.code
+  }
+  emit('update:modelValue', value)
   emit('change', country)
   isOpen.value = false
   searchQuery.value = ''

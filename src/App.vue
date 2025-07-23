@@ -84,6 +84,42 @@
     </div>
 
     <div class="demo-section">
+      <h2>Type Options</h2>
+      <p>Control what value is returned by modelValue: country code or phone dial code (without +)</p>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <h3>Country Code (Default)</h3>
+          <CountrySelector
+            v-model="selectedCountryCode"
+            :language="currentLanguage"
+            type="country"
+            :show-dial-code="true"
+            @change="onCountryCodeChange"
+          />
+          <div v-if="selectedCountryCodeInfo" class="selected-info">
+            Value: {{ selectedCountryCode }}<br>
+            Country: {{ selectedCountryCodeInfo.name }}
+          </div>
+        </div>
+
+        <div class="demo-item">
+          <h3>Phone Dial Code (without +)</h3>
+          <CountrySelector
+            v-model="selectedPhoneCode"
+            :language="currentLanguage"
+            type="phone"
+            :show-dial-code="true"
+            @change="onPhoneCodeChange"
+          />
+          <div v-if="selectedPhoneCodeInfo" class="selected-info">
+            Value: {{ selectedPhoneCode }}<br>
+            Country: {{ selectedPhoneCodeInfo.name }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-section">
       <h2>Customization</h2>
       <p>Various customization options</p>
       <div class="demo-grid">
@@ -146,6 +182,12 @@ const selectedCountry7 = ref('')
 const selectedCountry8 = ref('')
 const selectedCountry9 = ref('US')
 
+// Type demo states
+const selectedCountryCode = ref('')
+const selectedPhoneCode = ref('')
+const selectedCountryCodeInfo = ref<Country | null>(null)
+const selectedPhoneCodeInfo = ref<Country | null>(null)
+
 const selectedInfo1 = ref<Country | null>(null)
 const selectedInfo2 = ref<Country | null>(null)
 
@@ -155,6 +197,14 @@ const onCountryChange1 = (country: Country | null) => {
 
 const onCountryChange2 = (country: Country | null) => {
   selectedInfo2.value = country
+}
+
+const onCountryCodeChange = (country: Country | null) => {
+  selectedCountryCodeInfo.value = country
+}
+
+const onPhoneCodeChange = (country: Country | null) => {
+  selectedPhoneCodeInfo.value = country
 }
 
 const onLanguageChange = () => {
