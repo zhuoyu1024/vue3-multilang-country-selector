@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, type VueWrapper } from '@vue/test-utils'
 import CountrySelector from '../CountrySelector.vue'
 import type { Country } from '../../types'
 
@@ -10,7 +10,7 @@ const mockCountries: Country[] = [
 ]
 
 describe('CountrySelector', () => {
-  let wrapper: any
+  let wrapper: VueWrapper<any>
 
   beforeEach(() => {
     wrapper = mount(CountrySelector, {
@@ -88,22 +88,24 @@ describe('CountrySelector', () => {
 
   it('emits update:modelValue when country is selected', async () => {
     await wrapper.find('.country-selector__input-wrapper').trigger('click')
-    
+
     const firstOption = wrapper.find('.country-selector__option')
     await firstOption.trigger('click')
-    
-    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
-    expect(wrapper.emitted('update:modelValue')[0]).toEqual(['US'])
+
+    const emittedEvents = wrapper.emitted('update:modelValue')
+    expect(emittedEvents).toBeTruthy()
+    expect(emittedEvents?.[0]).toEqual(['US'])
   })
 
   it('emits change event when country is selected', async () => {
     await wrapper.find('.country-selector__input-wrapper').trigger('click')
-    
+
     const firstOption = wrapper.find('.country-selector__option')
     await firstOption.trigger('click')
-    
-    expect(wrapper.emitted('change')).toBeTruthy()
-    expect(wrapper.emitted('change')[0][0]).toEqual(mockCountries[0])
+
+    const emittedEvents = wrapper.emitted('change')
+    expect(emittedEvents).toBeTruthy()
+    expect(emittedEvents?.[0]?.[0]).toEqual(mockCountries[0])
   })
 
   it('shows clear button when clearable is true and country is selected', async () => {
@@ -116,17 +118,19 @@ describe('CountrySelector', () => {
   })
 
   it('clears selection when clear button is clicked', async () => {
-    await wrapper.setProps({ 
+    await wrapper.setProps({
       modelValue: 'US',
-      clearable: true 
+      clearable: true
     })
-    
+
     await wrapper.find('.country-selector__clear').trigger('click')
-    
-    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
-    expect(wrapper.emitted('update:modelValue')[0]).toEqual([''])
-    expect(wrapper.emitted('change')).toBeTruthy()
-    expect(wrapper.emitted('change')[0]).toEqual([null])
+
+    const modelValueEvents = wrapper.emitted('update:modelValue')
+    const changeEvents = wrapper.emitted('change')
+    expect(modelValueEvents).toBeTruthy()
+    expect(modelValueEvents?.[0]).toEqual([''])
+    expect(changeEvents).toBeTruthy()
+    expect(changeEvents?.[0]).toEqual([null])
   })
 
   it('applies correct size class', async () => {
@@ -178,8 +182,9 @@ describe('CountrySelector', () => {
     const firstOption = wrapper.find('.country-selector__option')
     await firstOption.trigger('click')
 
-    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
-    expect(wrapper.emitted('update:modelValue')[0]).toEqual(['US'])
+    const emittedEvents = wrapper.emitted('update:modelValue')
+    expect(emittedEvents).toBeTruthy()
+    expect(emittedEvents?.[0]).toEqual(['US'])
   })
 
   it('emits dial code without + when type is phone', async () => {
@@ -189,8 +194,9 @@ describe('CountrySelector', () => {
     const firstOption = wrapper.find('.country-selector__option')
     await firstOption.trigger('click')
 
-    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
-    expect(wrapper.emitted('update:modelValue')[0]).toEqual(['1'])
+    const emittedEvents = wrapper.emitted('update:modelValue')
+    expect(emittedEvents).toBeTruthy()
+    expect(emittedEvents?.[0]).toEqual(['1'])
   })
 
   it('displays selected country when type is phone and modelValue is dial code without +', async () => {
